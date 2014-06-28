@@ -433,7 +433,7 @@
         req.send(null);
       },
       runtimes: function (runtime) {
-        if (runtime.protocol === 'iframe') {
+        if (runtime.protocol === 'iframe' || runtime.protocol == 'microflo') {
           return;
         }
         if (this.userRuntimes.indexOf(runtime) === -1) {
@@ -460,7 +460,7 @@
           var found = [];
           runtimes.forEach(function (runtime) {
             var inStore = null;
-            if (runtime.protocol === 'iframe') {
+            if (runtime.protocol === 'iframe' || runtime.protocol == 'microflo') {
               return;
             }
             this.userRuntimes.forEach(function (storedRuntime) {
@@ -494,7 +494,7 @@
             if (found.indexOf(runtime.id) !== -1) {
               return;
             }
-            if (runtime.protocol === 'iframe') {
+            if (runtime.protocol === 'iframe' || runtime.protocol == 'microflo') {
               return;
             }
             this.fire('removedruntime', runtime);
@@ -513,8 +513,7 @@
       },
       preparedefaults: function () {
         // Every NoFlo UI instance should have at least the local IFRAME runtime available
-        var hasIframeRuntime = false;
-        var runtime = new this.registry.Runtime({
+        var iframe = new this.registry.Runtime({
           label: 'Local NoFlo HTML5 environment',
           id: require('uuid')(),
           protocol: 'iframe',
@@ -523,7 +522,18 @@
         }, {
           host: this.registryUrl
         });
-        this.userRuntimes.push(runtime.runtime);
+        // And a MicroFlo runtime
+        var microflo = new this.registry.Runtime({
+          label: 'Local MicroFLo environment',
+          id: require('uuid')(),
+          protocol: 'microflo',
+          address: 'simulator',
+          type: 'microflo'
+        }, {
+          host: this.registryUrl
+        });
+        this.userRuntimes.push(iframe.runtime);
+        this.userRuntimes.push(microflo.runtime);
         this.fire('runtimes', this.userRuntimes);
       },
       createdproject: function (project) {
