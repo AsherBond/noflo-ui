@@ -180,6 +180,9 @@ noflo-component-editor {
 }
 
 #container > .preview-container {
+  height: 300px;
+  width: 300px;
+  z-index: 1000;
   display: none;
 }
 

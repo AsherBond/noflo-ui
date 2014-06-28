@@ -16,6 +16,18 @@
     <script src="bower_components/react/react.js"></script>
     <script src="browser/noflo-noflo-indexeddb/vendor/IndexedDBShim.min.js"></script>
     
+    <script src="microflo-runtime.js"></script>
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script>
+      requirejs.config({
+        shim: {
+          'microflo-runtime': {
+            exports: 'Module'
+          }
+        }
+      });
+    </script>
+
     <link rel="import" href="bower_components/the-graph/the-graph-editor/the-graph-editor.html">
     <noflo-polymer name="the-graph-editor" inports="graph library theme width height" outports="edges nodes"></noflo-polymer>
     <link rel="import" href="browser/noflo-noflo-polymer/noflo-polymer/noflo-polymer.html">
